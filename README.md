@@ -29,10 +29,14 @@ The primary objectives of the poll system backend are:
 ---
 
 ## Technologies Used
+### Backend:
 
-- **Django**: High-level Python framework for rapid development.
+- **Django and Django Rest Framework**: High-level Python framework for rapid development.
 - **PostgreSQL**: Relational database for poll and vote storage.
 - **Swagger**: For API documentation.
+
+### Frontend:
+- **React**
 
 ---
 
@@ -63,15 +67,14 @@ The primary objectives of the poll system backend are:
 - Implements JWT-based authentication for user actions.
 - Validates all inputs and applies rate limiting to prevent abuse.
 
-## Testing & Quality Assurance
+## Testing
 
 - Automated tests using Django’s test framework.
-- Code linting with flake8 and formatting with black.
 
 ## Deployment
 
 - Dockerized for easy deployment.
-- Hosted on [Heroku](https://heroku.com/) (link to be added).
+- Hosted on [Render](https://render.com/) (link to be added).
 
 ## Caching & Performance
 
@@ -82,7 +85,3 @@ The primary objectives of the poll system backend are:
 
 - Swagger/OpenAPI docs available at `/api/docs`.
 
-## Professional Practices
-
-- Follows GitHub Flow for version control.
-- [ERD Diagram](link) | [Slides](link)
