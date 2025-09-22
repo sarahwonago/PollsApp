@@ -40,10 +40,12 @@ class VoteSerializer(serializers.ModelSerializer):
     """Serializer for the Vote model."""
 
     def validate(self, data):
-        # Prevent voting after poll expiry
         poll = data["poll"]
+        user = data["user"]
         if poll.expires_at <= timezone.now():
             raise serializers.ValidationError("Voting is closed for this poll.")
+        if Vote.objects.filter(poll=poll, user=user).exists():
+            raise serializers.ValidationError("You have already voted in this poll.")
         return data
 
     class Meta:
