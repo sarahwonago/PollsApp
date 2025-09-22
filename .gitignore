@@ -1,0 +1,14 @@
+# .gitignore
+# Ignore Python bytecode files, virtual environments, and database files
+*.sqlite
+*.log
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.sqlite
+*.env
+roadmap.md
