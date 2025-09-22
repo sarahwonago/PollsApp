@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from .models import Poll, Option, Vote
 from .serializers import PollSerializer, OptionSerializer, VoteSerializer
-from .permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 class PollViewSet(viewsets.ModelViewSet):
