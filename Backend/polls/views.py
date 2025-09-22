@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import Poll, Option, Vote
 from .serializers import PollSerializer, OptionSerializer, VoteSerializer
+from .permissions import IsAuthenticatedOrReadOnly
 
 
 class PollViewSet(viewsets.ModelViewSet):
@@ -28,6 +29,7 @@ class PollViewSet(viewsets.ModelViewSet):
 
     queryset = Poll.objects.all().order_by("-created_at")
     serializer_class = PollSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class OptionViewSet(viewsets.ModelViewSet):
@@ -55,6 +57,7 @@ class OptionViewSet(viewsets.ModelViewSet):
 
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class VoteViewSet(viewsets.ModelViewSet):
@@ -82,3 +85,4 @@ class VoteViewSet(viewsets.ModelViewSet):
 
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
