@@ -29,6 +29,7 @@ The primary objectives of the poll system backend are:
 ---
 
 ## Technologies Used
+
 ### Backend:
 
 - **Django and Django Rest Framework**: High-level Python framework for rapid development.
@@ -36,6 +37,7 @@ The primary objectives of the poll system backend are:
 - **Swagger**: For API documentation.
 
 ### Frontend:
+
 - **React**
 
 ---
@@ -85,3 +87,12 @@ The primary objectives of the poll system backend are:
 
 - Swagger/OpenAPI docs available at `/api/docs`.
 
+# Docker commands
+
+```
+docker-compose up --build
+docker-compose exec backend python manage.py migrate
+docker-compose exec backend python manage.py createsuperuser
+docker-compose up -d
+docker-compose down
+```
