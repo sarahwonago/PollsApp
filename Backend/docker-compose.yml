@@ -1,0 +1,32 @@
+services:
+  backend:
+    build: ./Backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./Backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./Backend/.env
+    depends_on:
+      - redis
+      - db
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: polls_db
+      POSTGRES_USER: polls_user
+      POSTGRES_PASSWORD: polls_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
