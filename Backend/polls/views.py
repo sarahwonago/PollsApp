@@ -99,6 +99,11 @@ class VoteViewSet(viewsets.ModelViewSet):
     serializer_class = VoteSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def perform_create(self, serializer):
+        print("Incoming data:", self.request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user)
+
 
 class RegisterView(generics.CreateAPIView):
     """

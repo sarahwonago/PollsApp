@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPoll, fetchPollResults, castVote } from "../services/api";
-import { Box, Typography, Card, CardContent, RadioGroup, FormControlLabel, Radio, Button, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Button,
+  Alert,
+} from "@mui/material";
 
 export default function PollDetail() {
   const { id } = useParams();
@@ -12,21 +22,34 @@ export default function PollDetail() {
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    fetchPoll(id).then(res => setPoll(res.data));
-    fetchPollResults(id).then(res => setResults(res.data));
+    fetchPoll(id).then((res) => setPoll(res.data));
+    fetchPollResults(id).then((res) => setResults(res.data));
   }, [id]);
 
   const handleVote = async () => {
     setError("");
     setSuccess("");
     try {
-      const userId = localStorage.getItem("user_id"); // You may need to store user_id on login
-      await castVote({ poll: poll.id, option: selectedOption, user: userId });
+      // send only poll + option, not user
+      await castVote({
+        poll: poll.id,
+        option: parseInt(selectedOption, 10),
+      });
+
       setSuccess("Vote cast successfully!");
-      fetchPollResults(id).then(res => setResults(res.data));
-    } catch (err) {
-      setError(err.response?.data?.detail || "Voting failed.");
+      fetchPollResults(id).then((res) => setResults(res.data));
+   } catch (err) {
+      console.error("Vote error:", err.response?.data);
+      const msg =
+        err.response?.data?.poll ||
+        err.response?.data?.option ||
+        err.response?.data?.non_field_errors?.[0] ||
+        err.response?.data?.detail ||
+        (typeof err.response?.data === "string" ? err.response.data : null) ||
+        "Voting failed.";
+      setError(msg);
     }
+
   };
 
   if (!poll) return <Typography>Loading...</Typography>;
@@ -41,9 +64,9 @@ export default function PollDetail() {
           </Typography>
           <RadioGroup
             value={selectedOption}
-            onChange={e => setSelectedOption(e.target.value)}
+            onChange={(e) => setSelectedOption(e.target.value)}
           >
-            {poll.options.map(option => (
+            {poll.options.map((option) => (
               <FormControlLabel
                 key={option.id}
                 value={option.id.toString()}
@@ -60,14 +83,22 @@ export default function PollDetail() {
           >
             Vote
           </Button>
-          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
-          {success && <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert>}
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
+          {success && (
+            <Alert severity="success" sx={{ mt: 2 }}>
+              {success}
+            </Alert>
+          )}
         </CardContent>
       </Card>
       {results && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h6">Results</Typography>
-          {results.results.map(r => (
+          {results.results.map((r) => (
             <Typography key={r.option}>
               {r.option}: {r.votes} votes
             </Typography>
