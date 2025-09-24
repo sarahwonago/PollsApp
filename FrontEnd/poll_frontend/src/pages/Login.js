@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Box, Typography, Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:8000/api/token/";
 
@@ -8,6 +9,7 @@ export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ export default function Login({ onLogin }) {
       localStorage.setItem("access", res.data.access);
       localStorage.setItem("refresh", res.data.refresh);
       onLogin && onLogin();
+      navigate("/"); // Redirect poll list after login
     } catch (err) {
       setError("Invalid credentials");
     }
