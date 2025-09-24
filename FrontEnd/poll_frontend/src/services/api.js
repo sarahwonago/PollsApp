@@ -12,4 +12,25 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+// --- Auth ---
+export const login = (username, password) =>
+  api.post("token/", { username, password });
+
+export const register = (username, email, password) =>
+  api.post("register/", { username, email, password });
+
+// --- Polls ---
+export const fetchPolls = () => api.get("polls/");
+export const fetchPoll = (id) => api.get(`polls/${id}/`);
+export const createPoll = (data) => api.post("polls/", data);
+
+// --- Options ---
+export const createOption = (data) => api.post("options/", data);
+
+// --- Votes ---
+export const castVote = (data) => api.post("votes/", data);
+
+// --- Results ---
+export const fetchPollResults = (id) => api.get(`polls/${id}/results/`);
+
 export default api;
