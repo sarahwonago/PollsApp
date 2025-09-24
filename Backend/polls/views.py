@@ -3,6 +3,8 @@ from .models import Poll, Option, Vote
 from .serializers import PollSerializer, OptionSerializer, VoteSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from .serializers_auth import RegisterSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class PollViewSet(viewsets.ModelViewSet):
@@ -31,6 +33,15 @@ class PollViewSet(viewsets.ModelViewSet):
     queryset = Poll.objects.all().order_by("-created_at")
     serializer_class = PollSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @action(detail=True, methods=["get"])
+    def results(self, request, pk=None):
+        poll = self.get_object()
+        results = []
+        for option in poll.options.all():
+            votes = Vote.objects.filter(option=option).count()
+            results.append({"option": option.text, "votes": votes})
+        return Response({"poll": poll.question, "results": results})
 
 
 class OptionViewSet(viewsets.ModelViewSet):
