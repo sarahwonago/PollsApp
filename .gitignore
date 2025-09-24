@@ -12,3 +12,4 @@ __pycache__/
 *.sqlite
 *.env
 roadmap.md
+frontend_roadmap.md
