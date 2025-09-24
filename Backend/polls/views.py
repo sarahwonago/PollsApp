@@ -1,7 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import Poll, Option, Vote
 from .serializers import PollSerializer, OptionSerializer, VoteSerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from .serializers_auth import RegisterSerializer
 
 
 class PollViewSet(viewsets.ModelViewSet):
@@ -86,3 +87,12 @@ class VoteViewSet(viewsets.ModelViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class RegisterView(generics.CreateAPIView):
+    """
+    API endpoint for user registration.
+    """
+
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
