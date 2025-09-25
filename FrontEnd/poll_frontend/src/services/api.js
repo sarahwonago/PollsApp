@@ -71,4 +71,11 @@ export const castVote = (data) => api.post("votes/", data);
 // --- Results ---
 export const fetchPollResults = (id) => api.get(`polls/${id}/results/`);
 
+// Logout
+export const logout = () => {
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
+  window.location.href = "/login";  // redirect to login
+};
+
 export default api;

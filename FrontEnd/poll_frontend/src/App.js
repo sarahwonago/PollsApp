@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PollList from "./pages/PollList";
 import PollDetail from "./pages/PollDetail";
+import PollCreate from "./pages/PollCreate";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<PollList />} />
         <Route path="/polls/:id" element={<PollDetail />} />
+         <Route path="/create" element={<PollCreate />} />
 
       </Routes>
     </Router>
