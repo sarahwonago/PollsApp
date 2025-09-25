@@ -17,9 +17,12 @@ class OptionSerializer(serializers.ModelSerializer):
 
 
 class PollSerializer(serializers.ModelSerializer):
-    """Serializer for the Poll model."""
-
     options = OptionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Poll
+        fields = ["id", "question", "created_by", "created_at", "expires_at", "options"]
+        read_only_fields = ["id", "created_by", "created_at", "options"]
 
     def validate_question(self, value):
         if not value.strip():
@@ -30,10 +33,6 @@ class PollSerializer(serializers.ModelSerializer):
         if value <= timezone.now():
             raise serializers.ValidationError("Expiry date must be in the future.")
         return value
-
-    class Meta:
-        model = Poll
-        fields = ["id", "question", "created_by", "created_at", "expires_at", "options"]
 
 
 class VoteSerializer(serializers.ModelSerializer):

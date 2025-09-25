@@ -43,6 +43,9 @@ class PollViewSet(viewsets.ModelViewSet):
             results.append({"option": option.text, "votes": votes})
         return Response({"poll": poll.question, "results": results})
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 class OptionViewSet(viewsets.ModelViewSet):
     """
