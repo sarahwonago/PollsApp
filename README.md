@@ -1,98 +1,88 @@
-# Online Poll System Backend
+# Polling App
 
-## Real-World Application
+A simple full-stack polling application built with Django REST Framework (backend in Docker) and React + Material UI (frontend via npm).
+Users can register, log in, create polls, vote, and view real-time results.
 
-This project simulates backend development for applications requiring real-time data processing. Developers gain experience with:
+# Features
 
-- Building scalable APIs for real-time voting systems.
-- Optimizing database schemas for frequent operations.
-- Documenting and deploying APIs for public access.
+- User Authentication (JWT-based)
 
----
+- Create Polls with multiple options and expiry date
 
-## Overview
+- Vote Once Per Poll (unique per user)
 
-This case study focuses on creating a backend for an online poll system.  
-The backend provides APIs for **poll creation**, **voting**, and **real-time result computation**.  
-The project emphasizes **efficient database design** and **detailed API documentation**.
+- View Results live with vote counts
 
----
+- Modern UI with Material UI
 
-## Project Goals
+- Protected Routes for logged-in users
 
-The primary objectives of the poll system backend are:
+# Tech Stack
 
-- **API Development**: Build APIs for creating polls, voting, and fetching results.
-- **Database Efficiency**: Design schemas optimized for real-time result computation.
-- **Documentation**: Provide detailed API documentation using Swagger.
+## Backend (Dockerized)
 
----
+- Django
 
-## Technologies Used
+- Django REST Framework (DRF)
 
-### Backend:
+- JWT Authentication (djangorestframework-simplejwt)
 
-- **Django and Django Rest Framework**: High-level Python framework for rapid development.
-- **PostgreSQL**: Relational database for poll and vote storage.
-- **Swagger**: For API documentation.
+- Postgresql db
 
-### Frontend:
+## Frontend
 
-- **React**
+- React
 
----
+- Material UI (MUI v5)
 
-## Key Features
+- React Router v6
 
-### 1. Poll Management
+- Axios
 
-- APIs to create polls with multiple options.
-- Include metadata such as creation date and expiry.
+# Getting Started
 
-### 2. Voting System
+1. Clone the Repository
+   git clone https://github.com/sarahwonago/PollsApp
+   cd PollsApp
 
-- APIs for users to cast votes.
-- Implement validations to prevent duplicate voting.
+2. Start the Backend (Django in Docker)
 
-### 3. Result Computation
+Make sure you have Docker & Docker Compose installed.
 
-- Real-time calculation of vote counts for each option.
-- Efficient query design for scalability.
+`docker-compose up --build`
 
-### 4. API Documentation
+This will:
 
-- Use Swagger to document all endpoints.
-- Host documentation at `/api/docs` for easy access.
+- Build the Django backend image
 
-## Authentication & Security
+- Run migrations automatically
 
-- Implements JWT-based authentication for user actions.
-- Validates all inputs and applies rate limiting to prevent abuse.
+- Start the backend on http://localhost:8000
 
-## Testing
+- You can view backend logs with:
 
-- Automated tests using Django’s test framework.
+`docker-compose logs -f backend`
 
-## Deployment
+3. Start the Frontend (React with npm)
 
-- Dockerized for easy deployment.
-- Hosted on [Render](https://render.com/) (link to be added).
+Open a new terminal:
 
-## Caching & Performance
+cd Frontend
+`npm install
+npm start`
 
-- Uses Redis to cache poll results for real-time performance.
-- Database queries optimized with proper indexing.
+Frontend will run at: http://localhost:3000
 
-## API Documentation
+It will communicate with the backend running in Docker.
 
-- Swagger/OpenAPI docs available at `/api/docs`.
+# API Endpoints
 
-# Docker commands
-
-```
-docker-compose up --build
-docker-compose exec backend python manage.py migrate
-docker-compose exec backend python manage.py createsuperuser
-docker-compose up -d
-docker-compose down
-```
+Method Endpoint Description Auth Required
+POST /api/register/ Register a new user ❌
+POST /api/token/ Obtain JWT tokens ❌
+POST /api/token/refresh/ Refresh JWT access token ❌
+GET /api/polls/ List all polls ✅
+POST /api/polls/ Create a new poll ✅
+GET /api/polls/:id/ Poll details + options ✅
+POST /api/options/ Add option to a poll ✅
+POST /api/votes/ Vote on an option ✅
