@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Box, Typography, Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // <-- import
 
 const API_URL = "http://localhost:8000/api/register/"; 
 
@@ -11,13 +12,20 @@ export default function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const navigate = useNavigate(); // <-- hook for navigation
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     try {
       await axios.post(API_URL, { username, password, email });
-      setSuccess("Registration successful! You can now log in.");
+      setSuccess("Registration successful! Redirecting to login...");
+      
+      // redirect after a short delay (e.g., 1.5 seconds)
+      setTimeout(() => {
+        navigate("/login"); 
+      }, 1500);
     } catch (err) {
       setError("Registration failed. Try a different username.");
     }
