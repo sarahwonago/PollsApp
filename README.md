@@ -42,8 +42,8 @@ Users can register, log in, create polls, vote, and view real-time results.
 # Getting Started
 
 1. Clone the Repository
-   git clone https://github.com/sarahwonago/PollsApp
-   cd PollsApp
+   `git clone https://github.com/sarahwonago/PollsApp`
+   `cd PollsApp/Backend`
 
 2. Start the Backend (Django in Docker)
 
@@ -67,9 +67,9 @@ This will:
 
 Open a new terminal:
 
-cd Frontend
-`npm install
-npm start`
+`cd Frontend`
+`npm install`
+`npm start`
 
 Frontend will run at: http://localhost:3000
 
