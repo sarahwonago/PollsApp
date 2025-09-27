@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
+import { useNavigate } from "react-router-dom"; // import
 
 export default function PollCreate() {
   const [question, setQuestion] = useState("");
@@ -17,6 +18,8 @@ export default function PollCreate() {
   const [options, setOptions] = useState(["", ""]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate(); // hook for navigation
 
   const handleOptionChange = (idx, value) => {
     const newOptions = [...options];
@@ -49,6 +52,13 @@ export default function PollCreate() {
       );
 
       setSuccess("Poll created successfully!");
+
+      // redirect after 1s delay (to show success message)
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+
+      // reset form
       setQuestion("");
       setExpiresAt("");
       setOptions(["", ""]);
